@@ -1,0 +1,92 @@
+{% load i18n %}
+{% load avatar_tags %}
+{% load tagging_tags %}
+
+<div class="photo-right-profile clearfix">
+    <div class="photo-avatar">{% avatar photo.member.username 50 %}</div>
+    <div class="photo-profile-details">
+        <h2>Taken By</h2>
+        <a href="{% url profile_detail photo.member.username %}" title="{{ photo.member.username }}">{{ photo.member.username }}</a><br />
+        {{ photo.date_taken|date }}<br />
+        Viewed {{ photo.view_count }} times
+    
+    </div>
+</div>
+
+<div class="photo-right-tools">
+    {% if photo.tags %}
+        <h2><img src="{{ MEDIA_URL }}pinax/images/silk/icons/tag_blue.png" border="0" class="noborder" align="absmiddle" /> Tags</h2> 
+        <ul>
+            {% tags_for_object photo as tags %}
+            {% for tag in tags %}
+                <li><a href="/tags/{{ tag }}">{{ tag }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <div class="embed">
+        <a href="#" id="embed-code-toggle">{% trans "Get Embed Code" %}</a>
+             <div id="embed-code" style="display: none;">
+                <textarea>
+                    <a href="{{ host }}/photos/details/{{ photo.id }}"><img src="{{ host }}/{{ photo_url }}" alt="{{ photo.title }}"/></a>
+                </textarea>
+            </div>
+        </div>
+
+    {% endif %}
+    
+    {% if is_me %}
+        <form action="{% url photo_destroy photo.id %}" method="POST">
+            <label>Delete Photo</label> <input type="image" src="{{ MEDIA_URL }}pinax/images/silk/icons/delete.png" border="0" title="{% trans "Delete Photo" %}" />
+                        <input type="hidden" name="action" value="delete"/>
+        </form>
+
+        <a href="{% url photo_edit photo.id %}">Edit Photo</a>
+
+    {% endif %}
+
+</div>
+
+<div class="photo-right-exif">
+
+</div>
+{% if is_me %}
+<div class="photo-right-profile ">
+    {% if tribes %}
+        <h2>Add photo to tribe</h2>
+        {% for tribe in tribes %}
+            <form action="{{ photo.get_absolute_url }}" method="POST">
+                <input type="hidden" name="tribe" value="{{ tribe.id }}"/>
+            {% if tribe.has_photo %}
+                <input type="hidden" name="action" value="removefromtribe"/>
+                <input type="submit" value="remove"/>
+                {{ tribe.name }}
+            {% else %}
+                <input type="hidden" name="action" value="addtotribe"/>
+                <input type="submit" value="add"/>
+                {{ tribe.name }}
+            {% endif %}
+            </form>
+        {% endfor %}
+    {% endif %}
+
+    {% if projects %}
+        <h2>Add photo to project</h2>
+        {% for project in projects %}
+            <form action="{{ photo.get_absolute_url }}" method="POST">
+                <input type="hidden" name="project" value="{{ project.id }}"/>
+            {% if project.has_photo %}
+                <input type="hidden" name="action" value="removefromproject"/>
+                <input type="submit" value="remove"/>
+                {{ project.name }}
+            {% else %}
+                <input type="hidden" name="action" value="addtoproject"/>
+                <input type="submit" value="add"/>
+                {{ project.name }}
+            {% endif %}
+            </form>
+        {% endfor %}
+    {% endif %}
+
+
+</div>
+{% endif %}

@@ -1,0 +1,77 @@
+{% extends "photos/base.html" %}
+
+{% load i18n %}
+{% load humanize %}
+{% load tagging_tags %}
+{% load wiki_tags %}
+{% load markup %}
+{% load switchcase %}
+{% load restructuredtext %}
+{% load comments_tag %}
+{% load photo_tags %}
+{% load flagtags %}
+
+{% block head_title %}{% blocktrans %}Photo Details{% endblocktrans %}{% endblock %}
+
+{% block body %}
+  
+    <div class="right_panel">
+        {% include "photos/photo_right_panel.html" %}
+    </div>
+    
+    <div class="left_panel">
+    <h1>{% trans "Photo Details" %}</h1>
+    
+    {% if photo %}
+        <div class="gallery-photo">
+            <img src="{{ photo_url }}" alt="{{ photo.title }}"/>
+        </div>
+        <div class="photo-title">
+            <h2>{{ photo.title }}</h2>
+        </div>
+        <div class="photo-caption">
+            <p>{{ photo.caption }}</p>
+        </div>
+        
+        <div class="form-toggle">
+            <p><span id="flag-toggle"><img src="{{MEDIA_URL}}pinax/images/silk/icons/flag_red.png" />{% trans "Flag as inappropriate" %}</span></p>
+             <div id="flag-form" style="display: none;">
+                {% flag photo request.user.id %}
+             </div>
+        </div>
+        
+        <h3>Comments on This Photo:</h3>
+        {% comments photo %}
+    {% else %}
+    <p>No photos were found.</p>
+    {% endif %}
+    </div>
+    
+{% endblock %}
+
+
+{% block extra_body %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#flag-form').hide();
+            $('#flag-toggle').click(function() {
+                $('#flag-form').slideToggle();
+                $('#flag-form').autoscroll();
+                return false;
+            });
+            if ($('#flag-form ul.errorlist').length) {
+                $('#flag-form').show();
+                $('#flag-form ul.errorlist').autoscroll();
+            }
+            
+        });
+        
+        $(document).ready(function() {
+            $('#embed-code').hide();
+            $('#embed-code-toggle').click(function() {
+                $('#embed-code').toggle();
+                return false;
+            })
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,225 @@
+{% load i18n satchmo_category satchmo_google satchmo_util satchmo_currency satchmo_discounts app_plugins normalize_decimal %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}" xml:lang="{{ LANGUAGE_CODE }}" lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>{% if site_name %}{{ site_name }} : {% endif %}{% block head_title %}{% endblock %}</title>
+    <!--[if IE]><style>
+    div {
+    zoom: 1; /* trigger hasLayout */
+    }
+    </style><![endif]-->
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/ecommerce-theme/css/reset.css" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/ecommerce-theme/css/boxes.css" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/ecommerce-theme/css/menu.css" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/ecommerce-theme/css/custom.css" />
+    <!--<link rel="stylesheet" href="{{ MEDIA_URL }}pinax/css/base.css" />-->
+    <link rel="stylesheet" href="{{ MEDIA_URL }}pinax/css/tabs.css" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}uni_form/uni-form.css" />
+    {% if LANGUAGE_BIDI %}
+    <style type="text/css" media="screen">
+    div.right_panel {
+    float: left; /* hotfix for sidebar */
+    }
+    </style>
+    {% endif %}
+    {% block extra_head_base %}
+    {% block extra_head %}{% endblock %}
+    {% endblock %}
+</head>
+
+<body class="three-col {% block body_class %}{% endblock %}">
+    {% block header %}
+    <div id="header">    
+    <div class="header-top-container">
+        <div class="header-topbar">
+            <div class="quick-access">
+                <div class="welcome-msg">Default welcome msg!</div>
+                    <div class="shop-access">    <div>
+                    <ul>
+                        <li class="first"><a title="My Account" href="/account/">My Account</a></li>
+                        <li><a class="top-link-cart" title="My Cart" href="/cart/">My Cart</a></li>
+                        <li class="last"><a title="Log In" href="/account/login/">Log In</a></li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-top">
+            <div class="logo" dir="ltr"><h1 id="logo">
+                <a href="/"><img alt="Pinax" src="/site_media/images/logo.png"/></a>
+            </h1>
+            </div>
+
+            <form method="get" action="{% url satchmo_search %}" id="search_mini_form">
+                <fieldset>
+                <legend>Search Site</legend>
+                <div class="mini-search">
+                <input type="text" value="" name="q" class="input-text" id="search" autocomplete="off"/>
+                <input type="image" alt="Search" src="/site_media/common/ecommerce/stylesheets/theme/clean/colors/grey/images/search_btn.gif"/>
+                </div>
+                </fieldset>
+            </form>
+
+            <div class="header-nav-container">
+                <div class="header-nav">
+                {% block nav %}
+                    <ul id="nav" class="clearfix">
+                        <li ><a href="/">Home</a></li>
+                        <li ><a href="/cart">Cart</a></li>
+                    </ul>
+                {% endblock %}
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    {% endblock %}
+    {% if site_wide_announcements %}
+    <div id="site_wide_announcements">
+        <ul>
+        {% for announcement in site_wide_announcements %}
+        <li>
+        <a href="{{ announcement.get_absolute_url }}">{{ announcement }}</a> -
+        <a href="{% url announcement_hide announcement.pk %}?next={{ request.path }}">{% trans "Hide announcement" %}</a>
+        </li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% block body_outer %}
+    <div class="middle-container">
+        <div class="middle col-3-layout clearfix"> 
+        <div id="tabhead">
+            <div class="login">{% block login %}{% endblock %}{% block locale_switcher %}{% endblock %}<div style="text-align: right;"></div></div>
+            <div id="left_tabs" >{% block left_tabs %}{% endblock %}</div>
+            <div id="right_tabs" >{% block right_tabs %}{% endblock %}</div>
+        </div>
+        <div id="subnav" class="clearfix">
+            {% block subnav_base %}{% block subnav %}&nbsp;{% endblock %}{% endblock %}
+            <br class="clearfix"/>
+            {% block navbar %}{% endblock %}
+        </div>
+
+        <div class="col-left side-col">
+            {% block sidebar-secondary %}
+            <div>
+            <div class="box base-mini mini-cart">
+            <div class="head">
+            <h4>{% trans "Shop Categories" %}</h4>
+            </div>
+            <div class="content">
+                {% block sidebar %}
+                {% block sidebar-categories %}
+                <div id="menu_container">
+                {% category_tree %}
+                </div>
+                {% endblock sidebar-categories %}
+
+                {% block sidebar-secondary-bottom %}
+                {% plugin_point "sidebar_secondary_bottom" %}
+                {% endblock %}
+                {% endblock sidebar %}
+                </div>
+                {% endblock sidebar-secondary %}
+            </div>
+            </div>
+        <br class="clearfix"/>
+        </div>
+
+        <div id="main" class="col-main">
+            {% if messages %}
+            <ul id="messages">
+            {% for message in messages %}
+            <li id="message_{{ forloop.counter }}"><a href="#" onclick="$('#message_{{ forloop.counter }}').fadeOut(); return false;"><small>{% trans "clear" %}</small></a> {{ message }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% block body %}
+            {% endblock %}
+            {% block content %}{% endblock %}
+        </div>
+
+        <div class="col-right side-col">{# rightnav #}
+            <div class="box base-mini mini-cart">
+                <div class="head">
+                <h4>{% trans "Quick Links" %}</h4>
+                </div>
+                <div class="content">
+                {% block sidebar-primary %}
+                {% url satchmo_product_recently_added as recenturl %}
+                {% if recenturl %}<a href="{{ recenturl }}">{% trans "Recently Added" %}</a>{% endif %}
+                {% url satchmo_product_best_selling as popularurl %}
+                {% if popularurl %}<br/><a href="{{ popularurl }}">{% trans "Best Sellers" %}</a>{% endif %}
+                {% plugin_point "sidebar_links" %}
+
+                </div>
+            </div>
+
+            <div class="box base-mini mini-cart">
+                <div class="head">
+                <h4>{% trans "Account Information" %}</h4>
+                </div>
+            <div class="content">
+                {% if user.is_staff %}
+                <a href="/admin" target="blank">{% trans "Admin" %}</a><br/>
+                {% endif %}
+                {% if user.is_authenticated %}
+                {% url satchmo_account_info as accounturl %}
+                {% if accounturl %}<a href="{{ accounturl }}" target="blank">{% trans "Account Details" %}</a><br/>{% endif %}
+                <a href="{{ logout_url }}?next={{request.path}}">{% trans "Log out" %}</a><br/>
+                {% else %}
+                <a href="{{ login_url }}?next={{request.path}}">{% trans "Log in" %}</a><br/>
+                {% endif %}
+
+                {% url satchmo_cart as carturl %}
+                {% if carturl %}<a href="{{ carturl }}">{% trans "Cart" %}</a>{% endif %}
+
+                {% if cart_count %}
+                ({{ cart_count|normalize_decimal }}{% if cart.total %} - {{ cart|discount_cart_total:sale|currency }}{% endif %})<br/>
+                {% url satchmo_checkout-step1 as checkouturl %}
+                {% if checkouturl %}<a href="{{ checkouturl }}">{% trans "Check out" %}</a>{% endif %}
+                {% endif %}
+
+                {% plugin_point "shop_sidebar_actions" %}
+
+                {% url satchmo_contact as contact_url %}
+                {% if contact_url %}<p><a href="{{ contact_url }}">{% trans "Contact Us" %}</a></p>{% endif %}
+
+                {% satchmo_language_selection_form %}
+
+
+                <p>You have no items in your shopping cart.</p>
+            </div>
+        </div>
+
+
+
+        {% block sidebar-primary-bottom %}
+        {% plugin_point "shop_sidebar_primary" %}
+        {% endblock %}
+        {% endblock sidebar-primary %}
+        </div>
+        </div>
+        </div>
+
+    {% endblock %}
+    <div class="footer-container">
+        <div id="footer">{% block footer %}{% endblock %}</div>
+    </div>
+    <script src="{{ MEDIA_URL }}pinax/js/jquery.js" type="text/javascript"></script>
+    <script src="{{ MEDIA_URL }}uni_form/uni-form.jquery.js" type="text/javascript"></script>
+    {% block extra_body_base %}
+    {% block extra_body %}{% endblock %}
+    {% endblock %}
+    {% block page-close %}
+    {% block google-tracker %}
+    {% if shop.options.GOOGLE.ANALYTICS.value %}
+    {% show_tracker is_secure %}
+    {% endif %}
+    {% endblock %}
+    {% endblock %}
+</body>
+</html>

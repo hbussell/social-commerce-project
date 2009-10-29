@@ -1,0 +1,42 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Other Services" %}{% endblock %}
+
+{% block body %}
+
+<h1>{% trans "Other Services" %}</h1>
+<h3><a id="twitterform-toggle" href="#">{% trans "Twitter" %}</a></h3>
+<form  action="" method="POST" name="TwitterForm" id="TwitterForm">
+  {% if twitter_authorized %}
+  <p style="background:#C8E8FB">
+    {% trans "You have already authorized a twitter account." %}
+    {% trans "Change your account with this form." %}
+    <a href="{% url acct_other_services_remove %}">Delete</a> and start over.
+  
+{% endif %}
+<table>
+  {{ twitter_form }}
+  <tr>
+      <td>&nbsp;</td>
+      <td><input id="actionType" type="hidden" name="actionType" value="saveTwitter" />
+      <input type="submit" value="{% trans "save" %}"/></td></tr>
+</table>
+        <label for="SaveTwitter"></label>
+</form>
+    <p>{% endblock %}
+      
+      {% block extra_body %}
+      {% load jquery_validation %}
+      {% include_validation %}
+  <script type="text/javascript">
+       $(document).ready(function() {
+           $('#TwitterForm').hide();
+           $('#twitterform-toggle').click(function() {
+               $('#TwitterForm').toggle();
+               return false;
+           });
+       });
+      </script>
+      {% endblock %}</p>

@@ -1,0 +1,23 @@
+{% load i18n cms_tags %}
+<div id="sitemap" style="display:none">
+<ul class="header">
+	<li>
+		<div class="cont">
+			<div class="col1">{% trans "title" %}</div>
+			<div class="col2">
+				<div class="col-actions">{% trans "quick actions" %}</div>	
+				<div class="col-published">{% trans "published" %}</div>
+				<div class="col-navigation">{% trans "in navigation" %}</div>{% if softroot %}
+				<div class="col-softroot">{% trans "softroot" %}</div>{% endif %}
+				<div class="col-template">{% trans "template" %}</div>
+				<div class="col-creator">{% trans "author" %}</div>
+			</div>
+		</div>
+	</li>
+</ul>
+<div class="tree">
+	<ul class="tree-default">
+		{% for page in cl.get_items %}{% show_admin_menu page cl.is_filtered %}{% endfor %}
+	</ul>
+</div>
+</div>

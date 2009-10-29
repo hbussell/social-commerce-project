@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load openid_tags %}
+{% load ifsetting_tag %}
+{% load svn_app_version %}
+{% load analytics %}
+
+{% block extra_head_base %}
+    <link rel="stylesheet" href="{{ MEDIA_URL }}pinax/css/topics.css" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/site_tabs.css" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/social_project.css" />
+    <script type="text/javascript" src="{{ MEDIA_URL }}pinax/js/topics.js"></script>
+    {% block extra_head %}{% endblock %}
+{% endblock %}
+
+{% block login %}
+    {% if user.is_authenticated %}
+        {% openid_icon openid user %}<b>{{ user }}</b> | <a href="{% url acct_email %}">{% trans "Account" %}</a> | {% if user.is_staff %}<a href="/admin/">{% trans "Admin" %}</a> | {% endif %}<a href="/openid/logout/?next={% url acct_logout %}">{% trans "Logout" %}</a>
+    {% else %}
+        <a href="{% url acct_login %}">{% trans "Login" %}</a> {% ifsetting ACCOUNT_OPEN_SIGNUP %}{% trans "or" %} <a href="{% url acct_signup %}"><b>{% trans "Sign up" %}</b></a>{% endifsetting %}
+    {% endif %}
+{% endblock %}
+
+{% block locale_switcher %}
+    <form action="{% if request.user.is_authenticated %}{% url acct_language_change %}{% else %}/i18n/setlang/{% endif %}" method="post" id="locale_switcher">
+        <select name="language" onchange="$('#locale_switcher').submit()">
+            {% for lang in LANGUAGES %}
+                <option value="{{ lang.0 }}"{% ifequal lang.0 LANGUAGE_CODE %} selected="selected"{% endifequal %}>{{ lang.1 }}</option>
+            {% endfor %}
+        </select>
+    </form>
+{% endblock %}
+
+{% block logo_link_image %}<a href="{% url home %}"><img src="{{ MEDIA_URL }}pinax/images/logo.png" alt="Pinax"/></a>{% endblock %}
+
+{% block right_tabs %}
+    {% if user.is_authenticated %}
+        <ul class="tabs">{% spaceless %}
+            <li id="tab_profile"><a href="{% url profile_detail user %}">{% trans "Profile" %}</a></li>
+            <li id="tab_photos"><a href="{% url photos %}">{% trans "Photos" %}</a></li>
+            <li id="tab_blogs"><a href="{% url blog_list_all %}">{% trans "Blogs" %}</a></li>
+            <li id="tab_tribes"><a href="{% url tribe_list %}">{% trans "Tribes" %}</a></li>
+            <li id="tab_tweets"><a href="{% url tweets_you_follow %}">{% trans "Tweets" %}</a></li>
+            <li id="tab_bookmarks"><a href="{% url all_bookmarks %}">{% trans "Bookmarks" %}</a></li>
+            <li id="tab_swaps"><a href="{% url offer_list_all %}">{% trans "Swaps" %}</a></li>
+            <li id="tab_locations"><a href="{% url loc_yours %}">{% trans "Locations" %}</a></li>
+            <li id="tab_inbox"><a href="{% url messages_inbox %}">{% trans "Inbox" %} ({{ combined_inbox_count }})</a></li>
+        {% endspaceless %}</ul>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+<div class="legal">
+    {% trans "&copy; 2008 &lt;your company here&gt;" %}
+    - <a href="{% url about %}">{% trans "About" %}</a>
+    - <a href="{% url terms %}">{% trans "Terms of Service" %}</a>
+    - <a href="{% url privacy %}">{% trans "Privacy Policy" %}</a>
+    - <a href="{% url dmca %}">{% trans "DMCA Notice" %}</a>
+    - Version: {% svn_app_version %}
+    - Django: {% svn_app_version "django" %}
+</div>
+{% endblock %}
+
+{% block extra_body_base %}
+    {% urchin %}
+    <script src="{{ MEDIA_URL }}base.js" type="text/javascript"></script>
+    {% block extra_body %}{% endblock %}
+{% endblock %}
