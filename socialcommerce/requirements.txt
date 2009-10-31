@@ -1,0 +1,12 @@
+#requirements taken from http://bitbucket.org/chris1610/satchmo/raw/tip/scripts/requirements.txt
+
+django>=1.1
+pycrypto
+http://www.satchmoproject.com/snapshots/trml2pdf-1.2.tar.gz
+django-registration
+PyYAML
+http://www.reportlab.org/ftp/ReportLab_2_3.tar.gz
+-e hg+http://bitbucket.org/bkroeze/django-threaded-multihost/#egg=django-threaded-multihost
+-e hg+http://bitbucket.org/bkroeze/django-caching-app-plugins/#egg=django-caching-app-plugins
+-e hg+http://bitbucket.org/bkroeze/django-signals-ahoy/#egg=django-signals-ahoy
+-e hg+https://sorl-thumbnail.googlecode.com/hg/#egg=sorl-thumbnail
