@@ -57,7 +57,8 @@ urlpatterns = patterns('',
     (r'^robots.txt$', include('robots.urls')),
     (r'^i18n/', include('django.conf.urls.i18n')),
     (r'^bookmarks/', include('bookmarks.urls')),
-    (r'^admin/(.*)', admin.site.root),
+    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    (r'^admin/', include(admin.site.urls) ),
     (r'^photos/', include('photos.urls')),
     (r'^avatar/', include('avatar.urls')),
     (r'^swaps/', include('swaps.urls')),
@@ -117,7 +118,7 @@ from satchmo_store.urls import shoppatterns, basepatterns
 urlpatterns +=  basepatterns + shoppatterns
 
 urlpatterns += patterns('',
-#    url(r'^', include('cms.urls')),
+    url(r'^', include('cms.urls')),
 )
 
 

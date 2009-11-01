@@ -12,7 +12,7 @@ PINAX_THEME = 'default'
 try:
     DEBUG
 except NameError:
-    DEBUG = False
+    DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -51,23 +51,32 @@ LANGUAGE_CODE = 'en'
 
 SITE_ID = 1
 
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
-USE_I18N = False
-
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'site_media', 'media')
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, "site_media")
-STATIC_ROOT = MEDIA_ROOT
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
-MEDIA_URL = '/site_media/'
-STATIC_URL = MEDIA_URL
+MEDIA_URL = '/site_media/media/'
+
+# Absolute path to the directory that holds static files like app media.
+# Example: "/home/media/media.lawrence.com/apps/"
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'site_media', 'static')
+
+# URL that handles the static files like app media.
+# Example: "http://media.lawrence.com"
+STATIC_URL = '/site_media/static/'
+
+# Additional directories which hold static files
+STATICFILES_DIRS = (
+    ('social_project', os.path.join(PROJECT_ROOT, 'media')),
+    ('pinax', os.path.join(PINAX_ROOT, 'media', PINAX_THEME)),
+)
+
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = posixpath.join(STATIC_URL, "admin/")
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ''
@@ -95,11 +104,14 @@ MIDDLEWARE_CLASSES = (
 
 )
 
-ROOT_URLCONF = 'website.urls'
+ROOT_URLCONF = 'socialcommerce.urls'
+from django.contrib import admindocs
+DJANGO_DOCS_ROOT = os.path.realpath(os.path.dirname(admindocs.__file__))
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, "templates"),
     os.path.join(PINAX_ROOT, "templates", PINAX_THEME),
+    os.path.join(DJANGO_DOCS_ROOT, "templates"),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -118,7 +130,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "account.context_processors.account",
     "messages.context_processors.inbox",
     "friends_app.context_processors.invitations",
-    "website.context_processors.combined_inbox_count",
+    "socialcommerce.context_processors.combined_inbox_count",
 )
 
 COMBINED_INBOX_COUNT_SOURCES = (
