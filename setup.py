@@ -4,7 +4,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name='social-commerce',
-version='0.0.5.1',
+version='0.0.6',
 description='Django project template using pinax and satchmo',
 author='Harley Bussell',
 author_email='modmac@gmail.com',
