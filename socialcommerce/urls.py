@@ -110,8 +110,8 @@ urlpatterns += patterns('',
 )
 
 if settings.SERVE_MEDIA:
-    urlpatterns += patterns('', 
-        (r'^site_media/(?P<path>.*)$', 'staticfiles.views.serve')
+    urlpatterns += patterns('',
+        (r'^site_media/', include('staticfiles.urls')),
     )
 
 from satchmo_store.urls import shoppatterns, basepatterns
