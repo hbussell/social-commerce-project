@@ -1,1 +1,7 @@
 include socialcommerce/*.txt
+recursive-include . *.html
+recursive-include . *.jpg
+recursive-include . *.png
+recursive-include . *.gif
+recursive-include . *.css
+recursive-include . *.js
