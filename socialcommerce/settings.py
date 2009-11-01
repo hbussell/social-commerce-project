@@ -3,6 +3,7 @@
 
 import os.path
 import pinax
+import posixpath
 
 PINAX_ROOT = os.path.realpath(os.path.dirname(pinax.__file__))
 PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
