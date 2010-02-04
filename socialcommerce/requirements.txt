@@ -1,18 +1,16 @@
-# pinax 0.7.1 requirements
--e git://github.com/pinax/pinax.git@643bce4be026827dc68e07b94c0d3d491a982f3a#egg=Pinax-0.7.1
-
 --find-links=http://pypi.pinaxproject.com
 --find-links=http://pypi2.pinaxproject.com
---find-links=http://pypi.pinaxproject.com/releases/0.7/
---find-links=http://pypi2.pinaxproject.com/releases/0.7/
 
+# Get all requirements formerly known as "external_libs" explicitly
+# hashlib
 python-dateutil==1.4.1
 docutils==0.5
 elementtree==1.2.7-20070827-preview
+
 gdata==1.3.3
 Pygments==1.0
 python-openid==2.2.4
-python-twitter==0.6
+python-twitter==0.5
 python-yadis==1.1.0
 simplejson==2.0.9
 textile==2.1.3
@@ -24,13 +22,13 @@ diff-match-patch==20090804
 geopy==0.93dev-r0
 pytz==2009l
 creole==1.0.1
+
 django-ajax-validation==0.1.3
 django-announcements==0.1.0
 django-atomformat==0.1.0dev
 django-avatar==1.0.2
 django-bookmarks==0.1.0
 django-db-log==1.0.1
-django-dbtemplates==0.5.8
 django-debug-toolbar==0.7.0
 django-email-confirmation==0.1.3
 django-extensions==0.4.1
@@ -57,25 +55,5 @@ django-wikiapp==0.2.0
 django-photologue==2.3
 django-attachments==0.3
 django-markup==0.3
-sorl==3.1
-django-generic-flatblocks==0.3.0
-django-frontendadmin==0.4
-django-filter==0.5.1
 template_utils==0.4p2
 django-staticfiles==0.1.2
-
-# satchmo requirements
-
-pycrypto
-http://www.satchmoproject.com/snapshots/trml2pdf-1.2.tar.gz
-django-registration
-PyYAML
-#PIL==1.1.6
-http://effbot.org/downloads/Imaging-1.1.6.tar.gz
-http://www.reportlab.org/ftp/ReportLab_2_3.tar.gz
--e hg+http://bitbucket.org/bkroeze/django-threaded-multihost/#egg=django-threaded-multihost
--e hg+http://bitbucket.org/bkroeze/django-caching-app-plugins/#egg=django-caching-app-plugins
--e hg+http://bitbucket.org/bkroeze/django-signals-ahoy/#egg=django-signals-ahoy
--e hg+https://sorl-thumbnail.googlecode.com/hg/#egg=sorl-thumbnail
--e hg+http://bitbucket.org/chris1610/satchmo/#egg=satchmo
-

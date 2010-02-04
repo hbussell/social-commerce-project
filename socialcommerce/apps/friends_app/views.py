@@ -16,8 +16,8 @@ from friends.importer import import_yahoo, import_google
 def friends(request, form_class=JoinRequestForm,
         template_name="friends_app/invitations.html"):
     if request.method == "POST":
+        invitation_id = request.POST.get("invitation", None)
         if request.POST["action"] == "accept":
-            invitation_id = request.POST["invitation"]
             try:
                 invitation = FriendshipInvitation.objects.get(id=invitation_id)
                 if invitation.to_user == request.user:
@@ -31,11 +31,20 @@ def friends(request, form_class=JoinRequestForm,
             if join_request_form.is_valid():
                 join_request_form.save(request.user)
                 join_request_form = form_class() # @@@
+        elif request.POST["action"] == "decline":
+            try:
+                invitation = FriendshipInvitation.objects.get(id=invitation_id)
+                if invitation.to_user == request.user:
+                    invitation.decline()
+                    request.user.message_set.create(message=_("Declined friendship request from %(from_user)s") % {'from_user': invitation.from_user})
+            except FriendshipInvitation.DoesNotExist:
+                pass
+            join_request_form = form_class()
     else:
         join_request_form = form_class()
     
-    invites_received = request.user.invitations_to.all().order_by("-sent")
-    invites_sent = request.user.invitations_from.all().order_by("-sent")
+    invites_received = request.user.invitations_to.invitations().order_by("-sent")
+    invites_sent = request.user.invitations_from.invitations().order_by("-sent")
     joins_sent = request.user.join_from.all().order_by("-sent")
     
     return render_to_response(template_name, {
@@ -51,13 +60,11 @@ def accept_join(request, confirmation_key, form_class=SignupForm,
     join_invitation = get_object_or_404(JoinInvitation, confirmation_key = confirmation_key.lower())
     if request.user.is_authenticated():
         return render_to_response("account/signup.html", {
-            "contact_email": settings.CONTACT_EMAIL,
         }, context_instance=RequestContext(request))
     else:
         form = form_class(initial={"email": join_invitation.contact.email, "confirmation_key": join_invitation.confirmation_key })
         return render_to_response(template_name, {
             "form": form,
-            "contact_email": settings.CONTACT_EMAIL,
         }, context_instance=RequestContext(request))
 
 def contacts(request, form_class=ImportVCardForm,

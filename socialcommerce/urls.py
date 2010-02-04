@@ -9,7 +9,7 @@ from account.openid_consumer import PinaxConsumer
 from blog.feeds import BlogFeedAll, BlogFeedUser
 from bookmarks.feeds import BookmarkFeed
 from microblogging.feeds import TweetFeedAll, TweetFeedUser, TweetFeedUserWithFriends
-import os.path
+
 
 tweets_feed_dict = {"feed_dict": {
     'all': TweetFeedAll,
@@ -57,13 +57,13 @@ urlpatterns = patterns('',
     (r'^robots.txt$', include('robots.urls')),
     (r'^i18n/', include('django.conf.urls.i18n')),
     (r'^bookmarks/', include('bookmarks.urls')),
-    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    (r'^admin/', include(admin.site.urls) ),
+    (r'^admin/(.*)', admin.site.root),
     (r'^photos/', include('photos.urls')),
     (r'^avatar/', include('avatar.urls')),
     (r'^swaps/', include('swaps.urls')),
     (r'^flag/', include('flag.urls')),
     (r'^locations/', include('locations.urls')),
+    
     (r'^feeds/tweets/(.*)/$', 'django.contrib.syndication.views.feed', tweets_feed_dict),
     (r'^feeds/posts/(.*)/$', 'django.contrib.syndication.views.feed', blogs_feed_dict),
     (r'^feeds/bookmarks/(.*)/?$', 'django.contrib.syndication.views.feed', bookmarks_feed_dict),
@@ -75,7 +75,7 @@ from photos.models import Image
 
 friends_photos_kwargs = {
     "template_name": "photos/friends_photos.html",
-    "friends_objects_function": lambda users: Image.objects.filter(member__in=users),
+    "friends_objects_function": lambda users: Image.objects.filter(is_public=True, member__in=users),
 }
 
 from blog.models import Post
@@ -116,9 +116,3 @@ if settings.SERVE_MEDIA:
 
 from satchmo_store.urls import shoppatterns, basepatterns
 urlpatterns +=  basepatterns + shoppatterns
-
-urlpatterns += patterns('',
-    url(r'^', include('cms.urls')),
-)
-
-

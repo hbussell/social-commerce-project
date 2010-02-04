@@ -3,14 +3,13 @@
 {% load i18n %}
 {% load threadedcommentstags %}
 
-{% load tribe_tags %}
+{% load tribes_tags %}
 {% load avatar_tags %}
-{% load project_tags %}
 {% load blog_tags %}
 {% load wiki_tags %}
-{% load voting_tags %} 
+{% load voting_tags %}
 {% load extra_voting_tags %}
-
+{% load theme_tags %}
 {% load in_filter %}
 {% load extra_tagging_tags %}
 
@@ -19,14 +18,14 @@
 
 {% block body %}
     <h1>{% trans "All Photos Matching " %}<i>"{{ tag }}"</i></h1>
-
+    
     {% if phototags %}
         <div class="thumb-row clearfix">
         {% for photo in phototags %}
                 <div class="gallery-photo-thumb">
                     <a href="/photos/details/{{ photo.id }}/"><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}"/></a><br />
                     from <a href="{% url profile_detail photo.member.username %}">{{ photo.member.username }}</a><br />
-                    <img src="{{ MEDIA_URL }}pinax/images/silk/icons/comment.png" border="0" class="noborder" align="absmiddle" /><a href="/photos/details/{{ photo.id }}/">{% get_comment_count for photo as commentcount %} {{ commentcount }} Comments</a>
+                    {% silk "comment" %} <a href="/photos/details/{{ photo.id }}/">{% get_comment_count for photo as commentcount %} {{ commentcount }} Comments</a>
                     <br />
                     Viewed {{ photo.view_count }} Times
                 </div>
@@ -35,10 +34,10 @@
     {% else %}
         No photos matching tag.
     {% endif %}
-
+    
     {% if bookmarktags %}
         {% scores_for_objects bookmarktags as score_dict %}
-
+        
         <h1>All Bookmarks Matching <i>{{ tag }}</i></h1>
         <table class="bookmarks" width="100%">
             {% for bookmark in bookmarktags %}
@@ -58,14 +57,14 @@
                 </tr>
             {% endfor %}
         </table>
-
+        
     {% else %}
         No bookmarks matching tag.
     {% endif %}
-
-
+    
+    
     <h1>{% trans "All Blog Posts Matching " %}<i>"{{ tag }}"</i></h1>
-
+    
     {% if alltags %}
         <p>{% trans "These are blog posts from everyone:" %}</p>
         {% for blog_post in alltags %}
@@ -74,43 +73,25 @@
     {% else %}
         No blog posts matching tag.
     {% endif %}
-
-    <h1>{% blocktrans %}All Projects Matching <i>{{ tag }}</i>{% endblocktrans %}</h1>
-
-    <dl>
-        {% for project in project_tags %}
-            {% show_project project %}
-        {% endfor %}
-    </dl>
-
-    <h1>{% blocktrans %}All Project Topics Matching <i>{{ tag }}</i>{% endblocktrans %}</h1>
-
-    {% for topic in project_topic_tags %}
-        {% show_project_topic topic %}
-    {% endfor %}
-
-    <h1>{% blocktrans %}All Project Tasks Matching <i>{{ tag }}</i>{% endblocktrans %}</h1>
-
-    {% for task in project_task_tags %}
-        {% show_task task %}
-    {% endfor %}
-
+    
     <h1>{% blocktrans %}All Tribes Matching <i>{{ tag }}</i>{% endblocktrans %}</h1>
-
+    
     <dl>
         {% for tribe in tribe_tags %}
             {% show_tribe tribe %}
         {% endfor %}
     </dl>
-
+    
+    {% comment %}
     <h1>{% blocktrans %}All Tribe Topics Matching <i>{{ tag }}</i>{% endblocktrans %}</h1>
-
+    
     {% for topic in tribe_topic_tags %}
         {% show_tribe_topic topic %}
     {% endfor %}
-
+    {% endcomment %}
+    
     <h1>{% blocktrans %}All Wiki Articles Matching <i>{{ tag }}</i>{% endblocktrans %}</h1>
-
+    
     <table class="topics">
         {% for article in wiki_article_tags %}
             {% show_teaser article %}
@@ -130,16 +111,16 @@
                 $('#bookmark_' + bookmark_id + '_score').text(new_score + ' point' + (new_score == 1 ? '': 's'));
             });
             if (direction == 'up') {
-                $('#up_' + bookmark_id).replaceWith('<a id="up_' + bookmark_id + '" href="#" onclick="return false;"><img src="{{ MEDIA_URL }}up_mod.png"/>');
-                $('#down_' + bookmark_id).replaceWith('<a id="down_' + bookmark_id + '" href="#" onclick="vote(' + bookmark_id + ', \'clear\'); return false;"><img src="{{ MEDIA_URL }}down_grey.png"/>');
+                $('#up_' + bookmark_id).replaceWith('<a id="up_' + bookmark_id + '" href="#" onclick="return false;"><img src="{{ STATIC_URL }}up_mod.png"/>');
+                $('#down_' + bookmark_id).replaceWith('<a id="down_' + bookmark_id + '" href="#" onclick="vote(' + bookmark_id + ', \'clear\'); return false;"><img src="{{ STATIC_URL }}down_grey.png"/>');
             }
             else if (direction == 'down') {
-                $('#up_' + bookmark_id).replaceWith('<a id="up_' + bookmark_id + '" href="#" onclick="vote(' + bookmark_id + ', \'clear\'); return false;"><img src="{{ MEDIA_URL }}up_grey.png"/>');
-                $('#down_' + bookmark_id).replaceWith('<a id="down_' + bookmark_id + '" href="#" onclick="return false;"><img src="{{ MEDIA_URL }}down_mod.png"/>');
+                $('#up_' + bookmark_id).replaceWith('<a id="up_' + bookmark_id + '" href="#" onclick="vote(' + bookmark_id + ', \'clear\'); return false;"><img src="{{ STATIC_URL }}up_grey.png"/>');
+                $('#down_' + bookmark_id).replaceWith('<a id="down_' + bookmark_id + '" href="#" onclick="return false;"><img src="{{ STATIC_URL }}down_mod.png"/>');
             }
             else { // clear
-                $('#up_' + bookmark_id).replaceWith('<a id="up_' + bookmark_id + '" href="#" onclick="vote(' + bookmark_id + ', \'up\'); return false;"><img src="{{ MEDIA_URL }}up_grey.png"/>');
-                $('#down_' + bookmark_id).replaceWith('<a id="down_' + bookmark_id + '" href="#" onclick="vote(' + bookmark_id + ', \'down\'); return false;"><img src="{{ MEDIA_URL }}down_grey.png"/>');
+                $('#up_' + bookmark_id).replaceWith('<a id="up_' + bookmark_id + '" href="#" onclick="vote(' + bookmark_id + ', \'up\'); return false;"><img src="{{ STATIC_URL }}up_grey.png"/>');
+                $('#down_' + bookmark_id).replaceWith('<a id="down_' + bookmark_id + '" href="#" onclick="vote(' + bookmark_id + ', \'down\'); return false;"><img src="{{ STATIC_URL }}down_grey.png"/>');
             }
         }
     </script>

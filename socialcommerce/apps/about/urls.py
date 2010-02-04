@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^dmca/$', direct_to_template, {"template": "about/dmca.html"}, name="dmca"),
     
     url(r'^what_next/$', direct_to_template, {"template": "about/what_next.html"}, name="what_next"),
+    url(r'^test/$', 'about.views.test', name="about_test"),
 )

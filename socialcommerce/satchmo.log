@@ -1,0 +1,5 @@
+2010-02-04 00:49:23,168 root        : INFO     Satchmo Started
+2010-02-04 00:49:24,516 shop.listeners: DEBUG    Added default shop listeners
+2010-02-04 00:49:27,653 payment.urls: DEBUG    Found payment processor: GIFTCERTIFICATE, adding urls at ^giftcertificate/
+t processor: GIFTCERTIFICATE, adding urls at ^giftcertificate/
+te/

@@ -5,7 +5,7 @@ import sys
 from os.path import abspath, dirname, join
 from site import addsitedir
 
-VIRTUALENV_BASE = ""
+VIRTUALENV_BASE = "/home/harley/projects/social-commerce-project/env"
 if not VIRTUALENV_BASE:
     raise Exception("VIRTUALENV_BASE is not set correctly.")
 

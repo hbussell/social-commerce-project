@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
-# Django settings for complete pinax project.
+# Django settings for social pinax project.
 
 import os.path
-import pinax
 import posixpath
+import pinax
 
-PINAX_ROOT = os.path.realpath(os.path.dirname(pinax.__file__))
-PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
+PINAX_ROOT = os.path.abspath(os.path.dirname(pinax.__file__))
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 # tells Pinax to use the default theme
 PINAX_THEME = 'default'
-try:
-    DEBUG
-except NameError:
-    DEBUG = True
 
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 # tells Pinax to serve media through django.views.static.serve.
@@ -33,11 +30,6 @@ DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
-if DATABASE_ENGINE == 'mysql':
-    DATABASE_OPTIONS = {
-        'init_command' : 'SET NAMES "utf8"',
-    }
-
 # Local time zone for this installation. Choices can be found here:
 # http://www.postgresql.org/docs/8.1/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
 # although not all variations may be possible on all operating systems.
@@ -51,6 +43,10 @@ TIME_ZONE = 'US/Eastern'
 LANGUAGE_CODE = 'en'
 
 SITE_ID = 1
+
+# If you set this to False, Django will make some optimizations so as not
+# to load the internationalization machinery.
+USE_I18N = False
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -70,7 +66,7 @@ STATIC_URL = '/site_media/static/'
 
 # Additional directories which hold static files
 STATICFILES_DIRS = (
-    ('social_project', os.path.join(PROJECT_ROOT, 'media')),
+    ('socialcommerce', os.path.join(PROJECT_ROOT, 'media')),
     ('pinax', os.path.join(PINAX_ROOT, 'media', PINAX_THEME)),
 )
 
@@ -80,7 +76,7 @@ STATICFILES_DIRS = (
 ADMIN_MEDIA_PREFIX = posixpath.join(STATIC_URL, "admin/")
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = ''
+SECRET_KEY = 'w^$5&=0o=*%g^iswnsvxw(jz1tk4tpx%e&=x2o^$up&sfzi@yv'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -100,19 +96,13 @@ MIDDLEWARE_CLASSES = (
     'djangodblog.middleware.DBLogMiddleware',
     'pinax.middleware.security.HideSensistiveFieldsMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
-    'cms.middleware.CurrentPageMiddleware',
-    'cms.middleware.MultilingualURLMiddleware',
-
 )
 
 ROOT_URLCONF = 'socialcommerce.urls'
-from django.contrib import admindocs
-DJANGO_DOCS_ROOT = os.path.realpath(os.path.dirname(admindocs.__file__))
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, "templates"),
     os.path.join(PINAX_ROOT, "templates", PINAX_THEME),
-    os.path.join(DJANGO_DOCS_ROOT, "templates"),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -121,9 +111,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
-
+    
     "pinax.core.context_processors.pinax_settings",
-
+    
     "notification.context_processors.notification",
     "announcements.context_processors.site_wide_announcements",
     "account.context_processors.openid",
@@ -168,7 +158,6 @@ INSTALLED_APPS = (
     'wiki',
     'swaps',
     'timezones',
-    'app_plugins',
     'voting',
     'voting_extras',
     'tagging',
@@ -183,11 +172,11 @@ INSTALLED_APPS = (
     'uni_form',
     'django_sorting',
     'django_markup',
+    'staticfiles',
     
     # internal (for now)
     'analytics',
     'profiles',
-    'staticfiles',
     'account',
     'signup_codes',
     'tribes',
@@ -195,21 +184,13 @@ INSTALLED_APPS = (
     'tag_app',
     'topics',
     'groups',
-   
-	#Django-CMS 2.0
-	'cms',
-    'cms.plugins.text',
-    'cms.plugins.picture',
-    'cms.plugins.link',
-    'cms.plugins.file',
-    'mptt',
-
+    
     'django.contrib.admin',
 
 )
 
 ABSOLUTE_URL_OVERRIDES = {
-    "auth.user": lambda o: "/profiles/%s/" % o.username,
+    "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
 }
 
 MARKUP_FILTER_FALLBACK = 'none'
@@ -246,6 +227,8 @@ LANGUAGES = (
 
 # URCHIN_ID = "ua-..."
 
+YAHOO_MAPS_API_KEY = "..."
+
 class NullStream(object):
     def write(*args, **kwargs):
         pass
@@ -276,35 +259,8 @@ WIKI_REQUIRES_LOGIN = True
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
 
-CMS_TEMPLATES = (
-    ('base.html', ugettext('default')),
-)
-execfile(PROJECT_ROOT + '/satchmo_settings.py')
 
-try:
-    DEBUG_TOOLBAR
-except NameError:
-    DEBUG_TOOLBAR = False
-
-if DEBUG_TOOLBAR:
-    MIDDLEWARE_CLASSES += (
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-    )
-    INSTALLED_APPS += (
-    'debug_toolbar',
-    )
-    DEBUG_TOOLBAR_PANELS = (
-    'debug_toolbar.panels.version.VersionDebugPanel',
-    'debug_toolbar.panels.timer.TimerDebugPanel',
-    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
-    'debug_toolbar.panels.headers.HeaderDebugPanel',
-    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
-    'debug_toolbar.panels.template.TemplateDebugPanel',
-    'debug_toolbar.panels.sql.SQLDebugPanel',
-    'debug_toolbar.panels.logger.LoggingPanel',
-    )
-
-
+execfile(os.path.join(PROJECT_ROOT, 'satchmo_settings.py'))
 
 try:
     from local_settings import *
