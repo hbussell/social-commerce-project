@@ -30,6 +30,7 @@ Get the social-commerce-project ::
     git clone git://github.com/hbussell/social-commerce-project.git
 
 Install the requirements ::
+
     cd social-commerce-project/socialcommerce
     pip install -r requirements.txt
 
@@ -37,6 +38,7 @@ Install the requirements ::
     versions
 
 Create the database and optionally load the sample data ::    
+
     python manage.py syncdb
     python manage.py satchmo_load_l10n
     python manage.py satchmo_load_store
@@ -52,4 +54,5 @@ Find out more options for the satchmo configuration
 http://www.satchmoproject.com/docs/svn/new_installation.html#customizing-the-settings
 
 Start it up ::
+
     python manage.py runserver
