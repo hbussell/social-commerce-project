@@ -1,0 +1,16 @@
+#body{
+width:1000px!important;
+}
+#content{
+float:left;
+width:720px;
+}
+
+#sidebar{
+float:right;
+margin-left:10px;
+padding-left:8px;
+padding-right:8px;
+border-left:1px solid #ccc;
+background-color:#fafafa;
+}

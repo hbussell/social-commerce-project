@@ -1,0 +1,85 @@
+--find-links=http://pypi.pinaxproject.com
+--find-links=http://pypi2.pinaxproject.com
+--find-links=http://pypi.pinaxproject.com/releases/0.7/
+--find-links=http://pypi2.pinaxproject.com/releases/0.7/
+
+# Get all requirements formerly known as "external_libs" explicitly
+# hashlib
+python-dateutil==1.4.1
+docutils==0.5
+elementtree==1.2.7-20070827-preview
+
+gdata==1.3.3
+Pygments==1.0
+python-openid==2.2.4
+python-twitter==0.5
+python-yadis==1.1.0
+simplejson==2.0.9
+textile==2.1.3
+vobject==0.8.1c
+BeautifulSoup==3.0.7a
+ybrowserauth==1.2
+Markdown==2.0.1
+diff-match-patch==20090804
+## FIXME: could not find svn URL in dependency_links for this package:
+geopy==0.93dev-r0
+pytz==2009l
+creole==1.0.1
+
+django-ajax-validation==0.1.3
+django-announcements==0.1.0
+django-atomformat==0.1.0dev
+django-avatar==1.0.2
+django-bookmarks==0.1.0
+django-db-log==1.0.1
+django-debug-toolbar==0.7.0
+django-email-confirmation==0.1.3
+django-extensions==0.4.1
+django-flag==0.1.1
+django-friends==0.1.4
+django-gravatar==0.1.0
+django-locations==0.1.1
+django-mailer==0.1.0
+django-messages==0.4.2
+django-microblogging==0.1.2
+django-notification==0.1.4
+django-oembed==0.1.0
+django-openid==0.2.0
+django-pagination==1.0.5.1
+django-robots==0.6.1
+django-swaps==0.5.3
+django-sorting==0.1
+django-tagging==0.3
+django-threadedcomments==0.5.1
+django-timezones==0.1.4
+django-uni-form==0.6.0
+django-voting==0.1-pre
+django-wikiapp==0.2.0
+django-photologue==2.3
+django-attachments==0.3
+django-markup==0.3
+template-utils==0.4p2
+django-staticfiles==0.1.2
+
+# satchmo requirements
+pycrypto==2.0.1
+django-registration==0.7
+PyYAML==3.09
+PIL==1.1.6
+-e hg+http://bitbucket.org/bkroeze/django-threaded-multihost/@5d711636b6bdbb2dc79247dd8860cac293dec22c#egg=django_threaded_multihost-tip
+#-e hg+http://bitbucket.org/bkroeze/django-caching-app-plugins/#egg=django-caching-app-plugins
+django-app-plugins==0.1.1
+-e hg+http://bitbucket.org/bkroeze/django-signals-ahoy/@4025183881b72a54c2ab0d9d5025d8f6872348df#egg=django_signals_ahoy-tip
+-e hg+https://sorl-thumbnail.googlecode.com/hg/@caf69b5206329d89282b4b8246a72e5aa77cb578#egg=sorl_thumbnail-tip
+-e hg+http://bitbucket.org/chris1610/satchmo/#egg=satchmo
+
+## The following requirements were added by pip --freeze:
+Django==1.1.1
+-e git://github.com/pinax/pinax.git@643bce4be026827dc68e07b94c0d3d491a982f3a#egg=Pinax-0.7.1
+TRML2PDF==1.0
+django-dbtemplates==0.5.8
+django-filter==0.5.1
+django-frontendadmin==0.4
+django-generic-flatblocks==0.3.0
+reportlab==2.3
+sorl==3.1

@@ -1,0 +1,31 @@
+/* SITE-SPECIFIC TAB STYLING */
+
+body.profile #tab_profile a,
+body.blogs #tab_blogs a,
+body.swaps #tab_swaps a,
+body.photos #tab_photos a,
+body.tribes #tab_tribes a,
+body.tweets #tab_tweets a,
+body.bookmarks #tab_bookmarks a,
+body.locations #tab_locations a,
+body.inbox #tab_inbox a
+{
+    color: #000; /* selected tab text colour */
+}
+body.profile #tab_profile,
+body.blogs #tab_blogs,
+body.swaps #tab_swaps,
+body.photos #tab_photos,
+body.tribes #tab_tribes,
+body.tweets #tab_tweets,
+body.bookmarks #tab_bookmarks,
+body.locations #tab_locations,
+body.inbox #tab_inbox
+{
+    margin: 0; /* to compensate for border */
+    padding: 5px 0 5px;
+    background-color: #DEF; /* selected tab colour */
+    border-left: 1px solid #000; /* tab border */
+    border-top: 1px solid #000; /* tab border */
+    border-right: 1px solid #000; /* tab border */
+}
