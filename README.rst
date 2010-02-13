@@ -56,3 +56,5 @@ http://www.satchmoproject.com/docs/svn/new_installation.html#customizing-the-set
 Start it up ::
 
     python manage.py runserver
+
+This project is uses the MIT License

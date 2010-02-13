@@ -10,7 +10,7 @@ author='Harley Bussell',
 author_email='modmac@gmail.com',
 url='http://github.com/hbussell/social-commerce-project',
 classifiers=[
-  "License :: OSI Approved :: GNU General Public License (GPL)",
+  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",
@@ -18,11 +18,10 @@ classifiers=[
   "Environment :: Console",
   "Topic :: Software Development",
   "Topic :: System :: Software Distribution"
-
 ],
 keywords='pinax-project',
 zip_safe=False,
-license='GPL',
+license='MIT',
 install_requires=[
 'setuptools',
 ],
