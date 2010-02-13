@@ -36,7 +36,6 @@ django-debug-toolbar==0.7.0
 django-email-confirmation==0.1.3
 django-extensions==0.4.1
 django-flag==0.1.1
-django-friends==0.1.4
 django-gravatar==0.1.0
 django-locations==0.1.1
 django-mailer==0.1.0
@@ -60,6 +59,9 @@ django-attachments==0.3
 django-markup==0.3
 template-utils==0.4p2
 django-staticfiles==0.1.2
+
+# fix model clash with satchmo contact model
+-e git://github.com/hbussell/django-friends.git@768fa9f7fef2df3325c60e4995f9185a885d6853#egg=django_friends-0.1.5-py2.5-dev
 
 # satchmo requirements
 pycrypto==2.0.1
