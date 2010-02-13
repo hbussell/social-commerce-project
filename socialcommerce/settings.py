@@ -76,7 +76,7 @@ STATICFILES_DIRS = (
 ADMIN_MEDIA_PREFIX = posixpath.join(STATIC_URL, "admin/")
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '776q+j*e#xky#0b%!!d!9wzk&e_!36y=+a1)%qp9_d@@5#oi#p'
+SECRET_KEY = 'w^$5&=0o=*%g^iswnsvxw(jz1tk4tpx%e&=x2o^$up&sfzi@yv'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -261,6 +261,7 @@ execfile(PROJECT_ROOT + '/satchmo_settings.py')
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
+
 try:
     from local_settings import *
 except ImportError:
