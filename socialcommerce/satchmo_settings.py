@@ -25,6 +25,7 @@ INSTALLED_APPS += (
     'tax.modules.percent',
     'shipping',
     'product',
+    'product.modules.configurable',
     'payment',
     'payment.modules.giftcertificate',
     'satchmo_utils',

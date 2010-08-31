@@ -65,10 +65,15 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'site_media', 'static')
 STATIC_URL = '/site_media/static/'
 
 # Additional directories which hold static files
+# STATICFILES_DIRS = (
+#     ('socialcommerce', os.path.join(PROJECT_ROOT, 'media')),
+#     ('pinax', os.path.join(PINAX_ROOT, 'media', PINAX_THEME)),
+# )
 STATICFILES_DIRS = (
-    ('socialcommerce', os.path.join(PROJECT_ROOT, 'media')),
-    ('pinax', os.path.join(PINAX_ROOT, 'media', PINAX_THEME)),
+    os.path.join(PROJECT_ROOT, 'media'),
+    os.path.join(PINAX_ROOT, 'media', PINAX_THEME),
 )
+
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -112,12 +117,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
-    
+    "staticfiles.context_processors.static_url",
     "pinax.core.context_processors.pinax_settings",
     
     "notification.context_processors.notification",
     "announcements.context_processors.site_wide_announcements",
-    "account.context_processors.openid",
     "account.context_processors.account",
     "messages.context_processors.inbox",
     "friends_app.context_processors.invitations",
