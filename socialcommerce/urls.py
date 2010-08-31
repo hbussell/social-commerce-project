@@ -113,7 +113,7 @@ from satchmo_store.urls import shoppatterns, basepatterns
 urlpatterns +=  basepatterns + shoppatterns
 
 if settings.SERVE_MEDIA:
-    urlpatterns += patterns('',
-        (r'^site_media/', include('staticfiles.urls')),
+    urlpatterns += patterns("",
+        url(r"", include("staticfiles.urls")),
     )
 

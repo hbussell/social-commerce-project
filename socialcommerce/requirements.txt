@@ -1,68 +1,78 @@
---find-links=http://pypi.pinaxproject.com
---find-links=http://pypi2.pinaxproject.com
---find-links=http://pypi.pinaxproject.com/releases/0.7/
---find-links=http://pypi2.pinaxproject.com/releases/0.7/
+--extra-index-url=http://dist.pinaxproject.com/dev/
 
-Django==1.1.1
--e git://github.com/pinax/pinax.git@643bce4be026827dc68e07b94c0d3d491a982f3a#egg=Pinax-0.7.1
+Django==1.2.1
+-e git://github.com/pinax/pinax.git#egg=Pinax
 
 # Get all requirements formerly known as "external_libs" explicitly
 # hashlib
-python-dateutil==1.4.1
-docutils==0.5
+# vobject depends on dateutil. it requires >=1.1. OS X ships with 1.2 with
+# Python 2.5 and requiring anything newer will break for --development. this
+# is not an issue for the released tarball
+python-dateutil>=1.1
+docutils==0.6
 elementtree==1.2.7-20070827-preview
 
 gdata==1.3.3
-Pygments==1.0
-python-openid==2.2.4
-python-twitter==0.5
+Pygments==1.3.1
+python-openid==2.2.5
+python-twitter==0.6
 python-yadis==1.1.0
 simplejson==2.0.9
-textile==2.1.3
+textile==2.1.4
 vobject==0.8.1c
-BeautifulSoup==3.0.7a
+BeautifulSoup==3.0.8.1
 ybrowserauth==1.2
-Markdown==2.0.1
+Markdown==2.0.3
 diff-match-patch==20090804
-geopy==0.93dev-r0
-pytz==2009l
-creole==1.0.1
+geopy==0.94
+pytz==2010h
+creole==1.1
 
 django-ajax-validation==0.1.3
-django-announcements==0.1.0
-django-atomformat==0.1.0dev
-django-avatar==1.0.2
+django-announcements==0.1.2
+django-atomformat==0.1.1.dev1
+django-avatar==1.0.4
+django-dbtemplates==0.5.8
 django-bookmarks==0.1.0
 django-db-log==1.0.1
-django-debug-toolbar==0.7.0
-django-email-confirmation==0.1.3
+django-debug-toolbar==0.8.3
+django-email-confirmation==0.2.dev2
 django-extensions==0.4.1
-django-flag==0.1.1
+django-flag==0.2.dev9
 django-gravatar==0.1.0
 django-locations==0.1.1
-django-mailer==0.1.0
+django-mailer==0.2a1.dev1
 django-messages==0.4.2
-django-microblogging==0.1.2
+django-microblogging==0.2.dev1
 django-notification==0.1.4
-django-oembed==0.1.0
-django-openid==0.2.0
-django-pagination==1.0.5.1
+django-oembed==0.1.1
+django-openid==0.2.3.dev1
+django-pagination==1.0.7
 django-robots==0.6.1
 django-swaps==0.5.3
 django-sorting>=0.1
-django-tagging==0.3
-django-threadedcomments==0.5.1
-django-timezones==0.1.4
-django-uni-form==0.6.0
-django-voting==0.1_pre
+django-tagging==0.3.1
+django-threadedcomments==0.5.2
+django-timezones==0.2.dev1
+django-uni-form==0.7.0
+django-voting==0.1
 django-wikiapp==0.2.0
 django-photologue==2.3
-django-attachments==0.3
+django-attachments==0.3.1
 django-markup==0.3
 template_utils==0.4p2
-django-staticfiles==0.1.2
+django-staticfiles==0.2
+django-wakawaka==0.4.dev5
+django-generic-flatblocks==0.9.1
+django-frontendadmin==0.4
+django-filter==0.5.3
+django-tagging-ext==0.2.0
+django-groups==0.1.dev10
+biblion==0.1.dev6
+idios==0.1.dev6
 
 # fix model clash with satchmo contact model
+# django-friends==0.1.5
 -e git+git://github.com/hbussell/django-friends.git#egg=django-friends
 
 # satchmo requirements
@@ -70,14 +80,20 @@ pycrypto
 http://www.satchmoproject.com/snapshots/trml2pdf-1.2.tar.gz
 django-registration
 PyYAML
-PIL==1.1.6
+PIL==1.1.7
 http://effbot.org/downloads/Imaging-1.1.6.tar.gz
 http://www.reportlab.org/ftp/ReportLab_2_3.tar.gz
+
+-e hg+http://bitbucket.org/bkroeze/django-livesettings/#egg=django-livesettings
+-e hg+http://bitbucket.org/bkroeze/django-keyedcache/#egg=django-keyedcache
+
+
 -e hg+http://bitbucket.org/bkroeze/django-threaded-multihost/#egg=django-threaded-multihost
 #-e hg+http://bitbucket.org/bkroeze/django-caching-app-plugins/#egg=django-caching-app-plugins
 django-app-plugins==0.1.1
 -e hg+http://bitbucket.org/bkroeze/django-signals-ahoy/#egg=django-signals-ahoy
--e hg+https://sorl-thumbnail.googlecode.com/hg/#egg=sorl-thumbnail
+
+sorl-thumbnail==3.2.5
 -e hg+http://bitbucket.org/chris1610/satchmo/#egg=satchmo
 
 
