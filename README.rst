@@ -5,7 +5,7 @@ social-commerce-project
 Sample project to help you get started using Pinax and Satchmo to create great
 social e-commerce websites.
 
-The current version uses Django 1.1.1, Pinax 0.7.1 and Satchmo trunk.
+The current version uses Django 1.2.1, Pinax 0.9a1 and Satchmo 0.9.2
 
 This has been tested with python 2.5 and 2.6
 
