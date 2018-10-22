@@ -1,6 +1,6 @@
 --extra-index-url=http://dist.pinaxproject.com/dev/
 
-Django==1.2.1
+Django==1.4.0
 -e git://github.com/pinax/pinax.git#egg=Pinax
 
 # Get all requirements formerly known as "external_libs" explicitly
