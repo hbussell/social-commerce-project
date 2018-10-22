@@ -3,7 +3,7 @@
 --find-links=http://pypi.pinaxproject.com/releases/0.7/
 --find-links=http://pypi2.pinaxproject.com/releases/0.7/
 
-Django==1.1.1
+Django==1.4.0
 -e git://github.com/pinax/pinax.git@643bce4be026827dc68e07b94c0d3d491a982f3a#egg=Pinax-0.7.1
 
 # Get all requirements formerly known as "external_libs" explicitly
